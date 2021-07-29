@@ -1,0 +1,19 @@
+replicaCount: 1
+
+image: lkuzmicheva/store-service
+
+service:
+  type: ClusterIP
+  port: 9081
+  targetPort: web
+
+ingress:
+  enabled: false
+
+kafka:
+  bootstrapAddress: "http://kafka.myapp.svc.cluster.local:9092"
+  groupId: store-service-group
+
+mongo:
+  uri: mongodb://mongo.myapp.svc.cluster.local:27017/storesrv
+  database: storesrv

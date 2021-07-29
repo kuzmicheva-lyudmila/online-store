@@ -1,0 +1,19 @@
+replicaCount: 1
+
+image: lkuzmicheva/payment-service
+
+service:
+  type: ClusterIP
+  port: 9082
+  targetPort: web
+
+ingress:
+  enabled: false
+
+kafka:
+  bootstrapAddress: "http://kafka.myapp.svc.cluster.local:9092"
+  groupId: payment-service-group
+
+mongo:
+  uri: mongodb://mongo.myapp.svc.cluster.local:27017/paymentsrv
+  database: paymentsrv

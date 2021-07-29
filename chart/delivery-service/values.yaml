@@ -1,0 +1,16 @@
+replicaCount: 1
+
+image: lkuzmicheva/delivery-service
+
+service:
+  type: ClusterIP
+  port: 9083
+  targetPort: web
+
+ingress:
+  enabled: false
+
+kafka:
+  bootstrapAddress: "http://kafka.myapp.svc.cluster.local:9092"
+  groupId: delivery-service-group
+

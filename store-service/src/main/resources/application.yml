@@ -1,0 +1,11 @@
+server:
+  port: 8081
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/storesrv
+      database: storesrv
+  kafka:
+    bootstrap-address: localhost:9092
+    group-id: store-service-group

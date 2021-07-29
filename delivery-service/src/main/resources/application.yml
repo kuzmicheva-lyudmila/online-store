@@ -1,0 +1,7 @@
+server:
+  port: 8083
+
+spring:
+  kafka:
+    bootstrap-address: localhost:9092
+    group-id: delivery-service-group

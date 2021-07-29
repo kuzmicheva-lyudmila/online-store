@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "delivery-service.fullname" . }}
+  labels:
+    {{- include "delivery-service.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "delivery-service.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "delivery-service.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image }}:{{ .Chart.AppVersion }}"
+          env:
+            - name: spring.kafka.bootstrapAddress
+              value: {{ .Values.kafka.bootstrapAddress }}
+            - name: spring.kafka.groupId
+              value: {{ .Values.kafka.groupId }}
+          ports:
+            - name: {{ .Values.service.targetPort }}
+              containerPort: 8083
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8083
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8083
